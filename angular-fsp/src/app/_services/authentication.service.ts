@@ -22,7 +22,7 @@ export class AuthenticationService {
     return this.userSubject.value;
   }
 
-  login(username: string, password: string) {
+  login({ username, password }) {
     return this.http.post<User>(`${environment.apiUrl}/usuarios/login`, { username, password })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user));
