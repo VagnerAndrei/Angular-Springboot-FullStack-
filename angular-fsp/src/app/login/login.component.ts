@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.login({ username: this.f['username'].value, password: this.f['password'].value }).pipe(first())
+    console.log(this.f['username'].value, this.f['password'].value)
+    this.authService.login({ email: this.f['username'].value, senha: this.f['password'].value }).pipe(first())
       .subscribe({
         next: () => {
           // get return url from query parameters or default to home page

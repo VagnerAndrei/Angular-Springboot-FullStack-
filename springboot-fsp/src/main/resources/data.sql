@@ -1,4 +1,1 @@
-CREATE TABLE usuario (
-	email VARCHAR(100) PRIMARY KEY,
-	senha VARCHAR(25) NOT NULL
-);
+INSERT INTO usuario (id, name) VALUES ('vagnermachado87@gmail.com', '123456');
