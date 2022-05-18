@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { HeaderInterceptor } from './_interceptors/header-interceptor';
 import { AuthenticationService } from './_services/authentication.service';
 
+
 @NgModule({
   declarations: [
     AppComponent, LoginComponent

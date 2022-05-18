@@ -13,15 +13,15 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup
   loading = false;
-  submitted = false;
+  accessDenied = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder, private authService: AuthenticationService) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthenticationService) {
 
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     })
   }
@@ -31,20 +31,23 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.f['username'].value, this.f['password'].value)
-    this.authService.login({ email: this.f['username'].value, senha: this.f['password'].value }).pipe(first())
-      .subscribe({
-        next: () => {
-          // get return url from query parameters or default to home page
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
-        },
-        error: error => {
-          // this.alertService.error(error);
-          console.log(error)
-          this.loading = false;
-        }
-      });
+    if (this.form.valid) {
+      this.loading = true;
+      this.accessDenied = false;
+      this.authService.login({ email: this.f['email'].value, senha: this.f['password'].value }).pipe(first())
+        .subscribe({
+          next: () => {
+            this.router.navigateByUrl('/user');
+            this.loading = false;
+          },
+          error: error => {
+            // this.alertService.error(error);
+            console.log(error)
+            this.accessDenied = true;
+            this.loading = false;
+          }
+        });
+    }
   }
 
 }

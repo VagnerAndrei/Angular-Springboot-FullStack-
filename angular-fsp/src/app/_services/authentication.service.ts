@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { environment } from 'src/environments/environment';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class AuthenticationService {
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
 
-  constructor(private router: Router, private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+  constructor(private router: Router, private http: HttpClient, private sessionService:SessionService) {
+    this.userSubject = new BehaviorSubject<User>(sessionService.getUser());
     this.user = this.userSubject.asObservable();
   }
 
@@ -25,17 +26,19 @@ export class AuthenticationService {
   login({ email, senha }) {
     return this.http.post<User>(`${environment.apiUrl}/usuarios/autenticar/`, { email, senha })
       .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem(environment.storageUser, JSON.stringify(user));
         this.userSubject.next(user);
         return user;
       }))
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem(environment.storageUser);
     this.userSubject.next(null);
-    this.router.navigate(['/account/login']);
+    this.router.navigate(['/login']);
   }
+
+  
 
 
 }
