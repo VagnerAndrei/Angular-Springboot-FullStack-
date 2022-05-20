@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import br.circle.domain.entity.Usuario;
 import br.circle.domain.repository.UsuarioRepository;
+import br.circle.dto.UsuarioDTO;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -36,6 +38,12 @@ public class UsuarioService implements UserDetailsService {
 //			perfis.add(new SimpleGrantedAuthority(perfil.name()));		
 
 		return new User(usuario.getEmail(), usuario.getSenha(), perfis);
+	}
+
+	public void registrar(UsuarioDTO dto) {
+		var usuario = new Usuario();
+		BeanUtils.copyProperties(dto, usuario);
+		usuarioRepository.save(usuario);
 	}
 
 }

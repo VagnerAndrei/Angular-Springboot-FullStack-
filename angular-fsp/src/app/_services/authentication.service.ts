@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { User } from '../_models/user';
+import { IUserLogin, IUserRegister, User } from '../_models/user';
 import { environment } from 'src/environments/environment';
 import { SessionService } from './session.service';
 
@@ -12,23 +12,23 @@ import { SessionService } from './session.service';
 export class AuthenticationService {
 
   private userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
+  private userObservable: Observable<User>;
 
-  constructor(private router: Router, private http: HttpClient, private sessionService:SessionService) {
-    this.userSubject = new BehaviorSubject<User>(sessionService.getUser());
-    this.user = this.userSubject.asObservable();
+  constructor(private router: Router, private http: HttpClient) {
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(environment.storageUser)));
+    this.userObservable = this.userSubject.asObservable();
   }
 
-  public get userValue(): User {
-    return this.userSubject.value;
+  public get user(): Observable<User> {
+    return this.userObservable;
   }
 
-  login({ email, senha }) {
-    return this.http.post<User>(`${environment.apiUrl}/usuarios/autenticar/`, { email, senha })
-      .pipe(map(user => {
-        localStorage.setItem(environment.storageUser, JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
+  login(user: IUserLogin) {
+    return this.http.post<User>(`${environment.apiUrl}/usuarios/autenticar/`, user)
+      .pipe(map(response => {
+        localStorage.setItem(environment.storageUser, JSON.stringify(response));
+        this.userSubject.next(response);
+        return response;
       }))
   }
 
@@ -38,7 +38,7 @@ export class AuthenticationService {
     this.router.navigate(['/login']);
   }
 
-  
+
 
 
 }

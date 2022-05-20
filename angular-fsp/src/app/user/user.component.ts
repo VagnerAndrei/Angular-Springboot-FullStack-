@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../_services/session.service';
 
 @Component({
   selector: 'app-user',
@@ -7,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  userEmail: string;
+  userName: string;
+
+  constructor(sessionService: SessionService) {
+    sessionService.userObservable.subscribe(user => {
+
+      this.userEmail = user ? user.email : ''
+      this.userName = user ? user.nome : ''
+    })
+  }
 
   ngOnInit(): void {
   }

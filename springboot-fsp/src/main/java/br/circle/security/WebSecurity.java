@@ -27,15 +27,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().disable().csrf().disable().authorizeRequests()
-				.antMatchers("/v3/api-docs", "/swagger*/**", "/h2-console*/**", "/usuarios",
-						"/usuarios/**").permitAll().anyRequest()
-				.authenticated().and()
-				.addFilterBefore(new CorsFilter(), AuthenticationFilter.class).addFilter(getAuthenticationFilter())
-				.addFilter(new AuthorizationFilter(authenticationManager())).sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-				
-//				.and().headers().frameOptions().disable().and().csrf()
-//				.ignoringAntMatchers("/h2-console/**");
+				.antMatchers("/v3/api-docs", "/swagger*/**", "/h2-console*/**", "/usuarios", "/usuarios/**").permitAll()
+				.anyRequest().authenticated().and().addFilterBefore(new CorsFilter(), AuthenticationFilter.class)
+				.addFilter(getAuthenticationFilter()).addFilter(new AuthorizationFilter(authenticationManager()))
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().headers().frameOptions().disable();
+
 	}
 
 	@Override

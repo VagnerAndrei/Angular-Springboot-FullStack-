@@ -3,18 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
-import { MenuComponent } from './menu/menu/menu.component';
 import { MenubarModule } from 'primeng/menubar'
+import { ButtonModule } from 'primeng/button'
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
     UserComponent,
-    MenuComponent
+    MenuComponent,
+
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-    MenubarModule
+    MenubarModule,
+    ButtonModule
   ]
 })
 export class UserModule { }

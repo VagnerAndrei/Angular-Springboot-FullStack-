@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,6 +26,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.circle.config.SpringApplicationContext;
+import br.circle.domain.entity.Usuario;
+import br.circle.domain.repository.UsuarioRepository;
 import br.circle.dto.LoginDTO;
 import br.circle.dto.UsuarioDTO;
 import io.jsonwebtoken.Jwts;
@@ -69,16 +73,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 		logger.info("AUTHENTICATED USER: {} ", userName);
 
-//			UsuarioRepository usuarioRepository = (UsuarioRepository) SpringApplicationContext.getBean("usuarioRepository");
-//
-//			Optional<Usuario> optional = usuarioRepository.findById(userName);
-//
-//			if (!optional.isPresent()) {
-//				logger.error("Erro ao recuperar usuario da base");
-//				throw new RuntimeException("Usuario inexistente");
-//			}
-//
-//			Usuario usuario = optional.get();
+		UsuarioRepository usuarioRepository = (UsuarioRepository) SpringApplicationContext.getBean("usuarioRepository");
+
+		Optional<Usuario> optional = usuarioRepository.findById(userName);
+
+		if (!optional.isPresent()) {
+			logger.error("Erro ao recuperar usuario da base");
+			throw new RuntimeException("Usuario inexistente");
+		}
+
+		Usuario usuario = optional.get();
 
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("authorities", auth.getAuthorities());
@@ -92,7 +96,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		List<String> perfis = new ArrayList<String>();
 		auth.getAuthorities().iterator().forEachRemaining(perfil -> perfis.add(perfil.toString()));
 
-		LoginDTO success = LoginDTO.builder().token(token).email(userName).build();
+		LoginDTO success = LoginDTO.builder().token(token).email(userName).nome(usuario.getNome()).build();
 
 		ObjectMapper mapper = new ObjectMapper();
 

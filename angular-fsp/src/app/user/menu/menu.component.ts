@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +11,7 @@ export class MenuComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.items = [
@@ -37,6 +38,10 @@ export class MenuComponent implements OnInit {
         ]
       }
     ];
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
 }
