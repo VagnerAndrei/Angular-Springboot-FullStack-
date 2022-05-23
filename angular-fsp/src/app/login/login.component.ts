@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this.authService.login({ email: this.f['email'].value, senha: this.f['password'].value }).pipe(first())
         .subscribe({
           next: () => {
-            this.router.navigateByUrl('/user');
+            this.router.navigateByUrl('/');
             this.loading = false;
           },
           error: error => {

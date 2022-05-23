@@ -75,7 +75,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 		UsuarioRepository usuarioRepository = (UsuarioRepository) SpringApplicationContext.getBean("usuarioRepository");
 
-		Optional<Usuario> optional = usuarioRepository.findById(userName);
+		Optional<Usuario> optional = usuarioRepository.findByEmail(userName);
 
 		if (!optional.isPresent()) {
 			logger.error("Erro ao recuperar usuario da base");
@@ -94,9 +94,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		ServletOutputStream stream = res.getOutputStream();
 
 		List<String> perfis = new ArrayList<String>();
-		auth.getAuthorities().iterator().forEachRemaining(perfil -> perfis.add(perfil.toString()));
+		auth.getAuthorities().forEach(perfil -> perfis.add(perfil.toString()));
 
-		LoginDTO success = LoginDTO.builder().token(token).email(userName).nome(usuario.getNome()).build();
+		LoginDTO success = LoginDTO.builder().token(token).email(userName).nome(usuario.getNome()).perfis(perfis).build();
 
 		ObjectMapper mapper = new ObjectMapper();
 

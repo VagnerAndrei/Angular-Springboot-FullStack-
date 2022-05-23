@@ -23,4 +23,12 @@ export class SessionService {
   get isLoggedUser(): boolean {
     return localStorage.getItem(environment.storageUser) != null;
   }
+
+  get isAdmin(): boolean {
+    return JSON.parse(localStorage.getItem(environment.storageUser)).perfis.includes('ADMIN')
+  }
+
+  get isUser(): boolean {
+    return JSON.parse(localStorage.getItem(environment.storageUser)).perfis.includes('USER')
+  }
 }

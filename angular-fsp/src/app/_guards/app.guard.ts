@@ -15,7 +15,7 @@ export class AppGuard implements CanActivate {
     if (!this.sessionService.isLoggedUser)
       return true;
 
-    this.router.navigateByUrl('/user')
+    this.router.navigateByUrl('/')
     return false;
   }
 

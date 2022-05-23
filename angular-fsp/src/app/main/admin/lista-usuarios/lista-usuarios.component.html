@@ -1,0 +1,31 @@
+<p-table [value]="users" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+        <div class="d-flex align-items-center justify-content-between">
+            Users
+            <p-button icon="pi pi-refresh" (click)="ngOnInit()"></p-button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>User</th>
+            <th>Admin</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td>{{user.nome}}</td>
+            <td>{{user.email}}</td>
+            <td>
+                <p-checkbox value="user" [value]="user" [(ngModel)]="usersSelecteds" inputId="user.id"
+                    (onChange)="onRoleChange($event, user, 'USER')"> </p-checkbox>
+            </td>
+            <td>
+                <p-checkbox value="user" [value]="user" [(ngModel)]="adminsSelecteds" inputId="user.id"
+                    (onChange)="onRoleChange($event, user, 'ADMIN')"> </p-checkbox>
+            </td>
+
+        </tr>
+    </ng-template>
+</p-table>

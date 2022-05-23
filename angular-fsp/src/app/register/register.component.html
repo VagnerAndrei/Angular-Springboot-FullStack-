@@ -44,6 +44,9 @@
                         Register
                     </button>
                     <a routerLink="../login" class="btn btn-link">Login</a>
+                    <div *ngIf="errorMessage" class="invalid-feedback d-block">
+                        {{errorMessage}}
+                    </div>
                 </div>
             </form>
         </div>
