@@ -33,7 +33,18 @@ export class MenuComponent implements OnInit {
             routerLink: 'admin'
           }]
         })
-    })
+      if (user?.perfis.includes('USER'))
+        this.items.push({
+          label: 'User',
+          icon: 'pi pi-fw pi-user',
+          items: [{
+            label: 'Meus dados',
+            icon: 'pi pi-fw pi-user-edit',
+            routerLink: 'user'
+          }]
+        })
+    }
+    )
 
   }
   logout() {

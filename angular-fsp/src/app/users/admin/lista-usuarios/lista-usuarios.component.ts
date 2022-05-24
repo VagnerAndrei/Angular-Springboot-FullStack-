@@ -53,9 +53,4 @@ export class ListaUsuariosComponent implements OnInit {
     })
   }
 
-  isSelectedUser(user: User): boolean {
-    return user.perfis.includes('USER')
-  }
-
-
 }

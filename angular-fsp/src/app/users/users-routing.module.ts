@@ -3,13 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from '../_guards/admin.guard';
 import { UserGuard } from '../_guards/user.guard';
 import { ListaUsuariosComponent } from './admin/lista-usuarios/lista-usuarios.component';
-import { MainComponent } from './main.component';
+import { UsersComponent } from './users.component';
+import { EditUserComponent } from './user/edit-user/edit-user.component';
 
 const routes: Routes = [
   {
-    path: '', component: MainComponent, canActivate: [UserGuard],
+    path: '', component: UsersComponent, canActivate: [UserGuard],
     children: [
-      { path: 'admin', component: ListaUsuariosComponent, canActivate: [AdminGuard] }
+      { path: 'admin', component: ListaUsuariosComponent, canActivate: [AdminGuard] },
+      { path: 'user', component: EditUserComponent, canActivate: [UserGuard] },
     ]
   },
 ];

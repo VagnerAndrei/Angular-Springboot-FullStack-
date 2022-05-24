@@ -11,7 +11,7 @@ export class SessionService {
 
   private currentUser: Observable<User>;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(authenticationService: AuthenticationService) {
     this.currentUser = authenticationService.user
   }
 
@@ -31,4 +31,21 @@ export class SessionService {
   get isUser(): boolean {
     return JSON.parse(localStorage.getItem(environment.storageUser)).perfis.includes('USER')
   }
+
+  private get token(): string {
+    return JSON.parse(localStorage.getItem(environment.storageUser))?.token ?? null
+  }
+
+  get tokenExpired(): boolean {
+    const expiry = (JSON.parse(atob(this.token.split('.')[1]))).exp;
+    const expired = (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    if (expired) {
+      localStorage.removeItem(environment.storageUser);
+      alert('Session expired!');
+      return true;
+    }
+    return false;
+
+  }
+
 }

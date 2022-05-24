@@ -6,10 +6,10 @@
                 <div class="form-group">
                     <label for="email">E-mail</label>
                     <input type="email" formControlName="email" class="form-control" [email]="true" />
-                    <div *ngIf="f.password.dirty && f.email.errors?.required" class="invalid-feedback d-block">
+                    <div *ngIf="f.email.dirty && f.email.errors?.required" class="invalid-feedback d-block">
                         <div>Email is required</div>
                     </div>
-                    <div *ngIf="f.password.dirty && f.email.errors?.email" class="invalid-feedback d-block">
+                    <div *ngIf="f.email.dirty && f.email.errors?.email" class="invalid-feedback d-block">
                         <div>Email is invalid</div>
                     </div>
                 </div>

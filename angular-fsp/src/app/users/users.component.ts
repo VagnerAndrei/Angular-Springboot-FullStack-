@@ -3,10 +3,10 @@ import { SessionService } from '../_services/session.service';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
-export class MainComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
   userEmail: string;
   userName: string;

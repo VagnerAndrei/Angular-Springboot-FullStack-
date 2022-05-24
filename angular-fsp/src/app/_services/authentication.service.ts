@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { IUserLogin, IUserRegister, User } from '../_models/user';
+import { IUserLogin, User } from '../_models/user';
 import { environment } from 'src/environments/environment';
-import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
