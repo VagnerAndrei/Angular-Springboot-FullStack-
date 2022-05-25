@@ -1,0 +1,17 @@
+<div class="image-upload">
+  <input
+    type="file"
+    #uploader
+    [accept]="acceptedTypes"
+    (change)="fileUploadChangeHandler($event)"
+    style="display: none"
+  />
+  <img [src]="imageSrc" *ngIf="imageSrc" style="max-width: 300px" />
+  <div class="buttons">
+    <button pButton class="btn btn-primary" style="width: 100px" (click)="uploader.click()" icon="pi pi-upload" label="Photo">
+    </button>
+    <button pButton class="btn btn-danger"
+    (click)="uploader.click()" icon="pi pi-times" label="Photo"></button>
+  </div>
+
+</div>

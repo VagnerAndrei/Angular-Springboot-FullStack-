@@ -11,6 +11,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ListaUsuariosComponent } from './admin/lista-usuarios/lista-usuarios.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
+import { ImageUploadComponent } from '../_components/image-upload/image-upload.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
     MenuComponent,
     ListaUsuariosComponent,
     EditUserComponent,
+    ImageUploadComponent
 
   ],
   imports: [
