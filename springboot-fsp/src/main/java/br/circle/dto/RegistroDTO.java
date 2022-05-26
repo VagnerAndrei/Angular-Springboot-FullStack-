@@ -1,9 +1,11 @@
 package br.circle.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,22 +14,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioDTO implements Serializable {
+public class RegistroDTO implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7473020398496922625L;
 
-	Integer id;
-	
 	@NotBlank
 	String email;
 	
 	@NotBlank
 	String nome;
 
-	List<String> perfis;
-
+	@NotBlank
+	@JsonInclude(value = Include.NON_EMPTY)
+	String senha;
+	
 	
 }

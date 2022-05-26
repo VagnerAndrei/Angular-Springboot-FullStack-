@@ -20,6 +20,10 @@ export class SessionService {
     return this.currentUser;
   }
 
+  get userId():number{
+    return JSON.parse(localStorage.getItem(environment.storageUser)).id ;
+  }
+
   get isLoggedUser(): boolean {
     return localStorage.getItem(environment.storageUser) != null;
   }

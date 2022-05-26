@@ -12,19 +12,23 @@ export class ListaUsuariosComponent implements OnInit {
   users: User[];
   usersSelecteds: User[];
   adminsSelecteds: User[];
+  loading:boolean=false
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.loading=true
     this.userService.findAll().subscribe({
       next: response => {
 
         this.users = response;
         this.filterSelecteds();
+        this.loading=false
       },
       error: error => {
         this.users = []
         console.log('An error ocurred on user service', error.error.message)
+        this.loading=false
       }
     })
   }

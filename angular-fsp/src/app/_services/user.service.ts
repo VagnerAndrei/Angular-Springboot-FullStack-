@@ -12,8 +12,11 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   register(user: IUserRegister) {
-    console.log(user)
     return this.http.post<User>(`${environment.apiUrl}/usuarios`, user)
+  }
+
+  find(id:number){
+    return this.http.get<User>(`${environment.apiUrl}/usuarios/${id}`)
   }
 
   findAll() {

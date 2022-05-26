@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 
 import lombok.Data;
 
@@ -42,5 +44,9 @@ public class Usuario implements Serializable {
 	@CollectionTable(name = "USUARIO_PERFIS", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id" ))
 	@Column(name = "perfil", nullable = false, length = 5)
 	private List<PerfilEnum> perfis = new ArrayList<PerfilEnum>();
+	
+	@Basic(fetch = FetchType.LAZY)
+	@Lob
+	private byte[] foto;
 
 }

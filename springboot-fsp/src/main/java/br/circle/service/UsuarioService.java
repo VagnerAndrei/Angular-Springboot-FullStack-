@@ -3,6 +3,7 @@ package br.circle.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import br.circle.domain.entity.PerfilEnum;
 import br.circle.domain.entity.Usuario;
 import br.circle.domain.repository.UsuarioRepository;
+import br.circle.dto.RegistroDTO;
 import br.circle.dto.UsuarioDTO;
 
 @Service
@@ -48,7 +50,7 @@ public class UsuarioService implements UserDetailsService {
 		return new User(usuario.getEmail(), usuario.getSenha(), perfis);
 	}
 
-	public void registrar(UsuarioDTO dto) throws Exception {
+	public void registrar(RegistroDTO dto) throws Exception {
 		if (usuarioRepository.findByEmail(dto.getEmail()).isPresent())
 			throw new Exception("Email já cadastrado.");
 
@@ -73,5 +75,16 @@ public class UsuarioService implements UserDetailsService {
 		usuarioRepository.save(usuario);
 	}
 
+	public byte[] getFoto(Integer idUSuario) {
+		return usuarioRepository.findById(idUSuario).orElseThrow(() -> new NoSuchElementException()).getFoto();
+	}
+
+	public UsuarioDTO consultar(Integer id) {
+		var usuario = usuarioRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+		var dto = new UsuarioDTO();
+		BeanUtils.copyProperties(usuario, dto);
+		return dto;
+
+	}
 
 }

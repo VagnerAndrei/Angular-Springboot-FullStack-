@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SessionService } from 'src/app/_services/session.service';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -12,12 +14,22 @@ export class EditUserComponent implements OnInit {
   loading: boolean;
   errorMessage: string
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private userService:UserService, private sessionService:SessionService) { 
+
+
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
+    })
+
+    this.userService.find(this.sessionService.userId).subscribe({
+      next : user => {
+        this.form.value.name = user.nome;
+        this.form.value.email = user.email;
+      }
     })
   }
 

@@ -2,7 +2,9 @@
     <ng-template pTemplate="caption">
         <div class="d-flex align-items-center justify-content-between">
             Users
-            <p-button icon="pi pi-refresh" (click)="ngOnInit()"></p-button>
+            <p-button icon="pi pi-refresh" (click)="ngOnInit()">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            </p-button>
         </div>
     </ng-template>
     <ng-template pTemplate="header">

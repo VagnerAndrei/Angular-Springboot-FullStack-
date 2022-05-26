@@ -33,4 +33,8 @@ export class ImageUploadComponent implements OnInit {
 
   }
 
+  delete(){
+    this.imageSrc = null
+  }
+
 }

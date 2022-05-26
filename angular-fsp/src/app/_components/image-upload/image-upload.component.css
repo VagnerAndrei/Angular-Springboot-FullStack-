@@ -1,7 +1,35 @@
 .image-upload{
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
-  gap: 15px
+  align-items: stretch;
+  gap: 15px;
+  margin: 20px 0 10px;
+}
+
+.image, button{
+  align-self: center;
+}
+
+
+
+
+@media only screen and (max-width: 640px) {
+  .image {
+      max-width: 70vw;
+      max-height: 30vh;
+  }
+  button {
+    min-width: 70px;
+
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .image {
+      max-width: 350px;
+      max-height: 350px;
+  }
+  button {
+    min-width: 350px;
+  }
 }

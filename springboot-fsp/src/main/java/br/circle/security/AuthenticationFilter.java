@@ -30,7 +30,7 @@ import br.circle.config.SpringApplicationContext;
 import br.circle.domain.entity.Usuario;
 import br.circle.domain.repository.UsuarioRepository;
 import br.circle.dto.LoginDTO;
-import br.circle.dto.UsuarioDTO;
+import br.circle.dto.RegistroDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -52,7 +52,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 				res.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			} else {
 
-				UsuarioDTO creds = new ObjectMapper().readValue(req.getInputStream(), UsuarioDTO.class);
+				RegistroDTO creds = new ObjectMapper().readValue(req.getInputStream(), RegistroDTO.class);
 				logger.info("Authentication with cpf: {}", creds.getEmail());
 
 				return authenticationManager.authenticate(
