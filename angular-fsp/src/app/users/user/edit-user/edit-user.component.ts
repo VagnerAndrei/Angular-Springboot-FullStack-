@@ -50,10 +50,11 @@ export class EditUserComponent implements OnInit {
     const formData: FormData = new FormData()
     if (this.file)
       formData.append('imagem', this.file)
-    if (this.file == null)
+    if (this.file === null)
       formData.append('deleteImagem', 'true')
     formData.append('nome', this.form.value.name)
     formData.append('email', this.form.value.email)
+    console.log(formData)
     this.userService.updateUser(formData, this.userId).subscribe({
       next: () => { 
         this.loading=false
