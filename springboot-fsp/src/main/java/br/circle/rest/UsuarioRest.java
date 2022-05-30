@@ -1,5 +1,7 @@
 package br.circle.rest;
 
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.circle.dto.RegistroDTO;
 import br.circle.dto.UsuarioDTO;
@@ -49,17 +52,36 @@ public class UsuarioRest {
 	public void atualizarPerfis(@RequestBody UsuarioDTO usuario) throws Exception {
 		usuarioService.atualizarPerfis(usuario);
 	}
-	
+
 	@GetMapping(value = "/{id}")
-	public UsuarioDTO consultar(@PathVariable Integer id) throws Exception{
+	public UsuarioDTO consultar(@PathVariable Integer id) throws Exception {
 		return usuarioService.consultar(id);
 	}
-	
-	@GetMapping(value = "/{id}/foto", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE})
+
+	@PutMapping(path = "/{id}")
+	@PreAuthorize("hasAuthority('USER')")
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+	public void editarUsuario(MultipartFile imagem, UsuarioDTO usuario, Boolean deleteImagem) throws Exception {
+
+		InputStream inputStream = null;
+		final String[] fotoFormatos = { "image/png", "image/jpg", "image/jpeg", "image/bmp" };
+
+		if (imagem != null) {
+			inputStream = imagem.getInputStream();
+			if (!Arrays.asList(fotoFormatos).contains(imagem.getContentType()))
+				throw new Exception("Formato da imagem inválido");
+		}
+
+		usuarioService.atualizarUsuario(usuario, inputStream, deleteImagem);
+
+	}
+
+	@GetMapping(value = "/{id}/foto", produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE,
+			MediaType.IMAGE_GIF_VALUE })
 	public @ResponseBody byte[] getFoto(@PathVariable Integer id) throws Exception {
 		return usuarioService.getFoto(id);
 	}
-	
+
 	@ExceptionHandler(NoSuchElementException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	protected void onInfracaoException() {

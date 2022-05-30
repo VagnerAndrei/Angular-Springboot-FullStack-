@@ -96,7 +96,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		List<String> perfis = new ArrayList<String>();
 		auth.getAuthorities().forEach(perfil -> perfis.add(perfil.toString()));
 
-		LoginDTO success = LoginDTO.builder().token(token).email(userName).nome(usuario.getNome()).perfis(perfis).build();
+		LoginDTO success = LoginDTO.builder().token(token).id(usuario.getId()).email(userName).nome(usuario.getNome()).perfis(perfis).build();
 
 		ObjectMapper mapper = new ObjectMapper();
 

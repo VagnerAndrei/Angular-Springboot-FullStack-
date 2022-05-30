@@ -1,5 +1,6 @@
 package br.circle.service;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -83,7 +85,25 @@ public class UsuarioService implements UserDetailsService {
 		var usuario = usuarioRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
 		var dto = new UsuarioDTO();
 		BeanUtils.copyProperties(usuario, dto);
+		dto.setPerfis(usuario.getPerfis().stream().map(perfil -> perfil.name()).collect(Collectors.toList()));
 		return dto;
+
+	}
+
+	public void atualizarUsuario(UsuarioDTO dto, InputStream inputStream, Boolean deleteImagem) throws Exception {
+
+		if (dto.getNome() == null || dto.getNome().isEmpty() || dto.getEmail() == null || dto.getEmail().isEmpty())
+			throw new IllegalArgumentException("Nome e email obrigatórios.");
+		var usuario = usuarioRepository.findById(dto.getId()).orElseThrow(() -> new NoSuchElementException());
+
+		BeanUtils.copyProperties(dto, usuario);
+
+		if (inputStream != null)
+			usuario.setFoto(IOUtils.toByteArray(inputStream));
+		else if (deleteImagem != null && deleteImagem)
+			usuario.setFoto(null);
+
+		usuarioRepository.save(usuario);
 
 	}
 

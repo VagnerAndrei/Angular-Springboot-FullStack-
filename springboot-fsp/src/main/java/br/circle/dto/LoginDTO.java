@@ -9,6 +9,7 @@ import lombok.Data;
 @Builder
 public class LoginDTO {
 	
+	private Integer id;
 
     private String email;
 

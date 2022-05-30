@@ -26,4 +26,8 @@ export class UserService {
   updateRoles(user: User) {
     return this.http.put<User>(`${environment.apiUrl}/usuarios/perfis`, user)
   }
+
+  updateUser(formData:FormData, id:number){
+    return this.http.put(`${environment.apiUrl}/usuarios/${id}`, formData)
+  }
 }

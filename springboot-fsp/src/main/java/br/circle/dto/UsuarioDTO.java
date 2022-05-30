@@ -19,6 +19,7 @@ public class UsuarioDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 7473020398496922625L;
 
+	@NotBlank
 	Integer id;
 	
 	@NotBlank
@@ -28,6 +29,6 @@ public class UsuarioDTO implements Serializable {
 	String nome;
 
 	List<String> perfis;
-
+	
 	
 }

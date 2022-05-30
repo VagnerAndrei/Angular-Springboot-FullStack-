@@ -4,10 +4,9 @@
     #uploader
     [accept]="acceptedTypes"
     (change)="fileUploadChangeHandler($event)"
-    style="display: none"
-  />
-    <button pButton (click)="uploader.click()" icon="pi pi-upload" pTooltip="Select Image" *ngIf="!imageSrc" label="Select image"></button>
-    <img [src]="imageSrc" *ngIf="imageSrc" class="image" />
-    <button pButton class="p-button-danger" icon="pi pi-times" pTooltip="Delete" *ngIf="imageSrc" (click)="delete()" label="Delete image"></button>
+    style="display: none"/>
+    <button pButton (click)="uploader.click()" type="button" icon="pi pi-upload" pTooltip="Select Image" *ngIf="!imageSrc" label="Select image"></button>
+    <img [src]="imageSrc" *ngIf="imageSrc" class="image" (error)="imageError()" (load)="onComplete()"/>
+    <button pButton type="button" class="p-button-warning" icon="pi pi-times" pTooltip="Remove" *ngIf="imageSrc && imageLoaded" (click)="delete()" label="Remove image"></button>
 
 </div>

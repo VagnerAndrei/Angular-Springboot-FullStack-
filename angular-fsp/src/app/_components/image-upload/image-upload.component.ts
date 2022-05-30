@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-image-upload',
@@ -7,34 +7,58 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImageUploadComponent implements OnInit {
 
-  acceptedTypes:string
-  imageSrc:string
+  acceptedTypes: string
+  files:[]
 
+  @ViewChild('uploader')
+  uploader: ElementRef
+
+  @Input() public imageSrc:string;
+  @Output() public imageChangeHandler = new EventEmitter()
+
+  imageLoaded=false
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  fileUploadChangeHandler(event){
+  fileUploadChangeHandler(event) {
     const reader = new FileReader();
-
-    if(event.target.files && event.target.files.length) {
+    console.log(this.uploader)
+    if (event.target.files && event.target.files.length) {
+      this.files = event.target.files
       const [file] = event.target.files;
-      reader.readAsDataURL(file);
+      if (file) {
 
-      reader.onload = () => {
+        reader.readAsDataURL(file);
 
-        this.imageSrc = reader.result as string;
+        reader.onload = () => {
 
-      };
+          this.imageSrc = reader.result as string;
+
+        };
+
+        this.imageChangeHandler.emit(file)
+      }
 
     }
 
   }
 
-  delete(){
+  imageError(){
+    this.imageSrc = null;
+  }
+
+  onComplete(){
+    this.imageLoaded=true
+  }
+
+  delete() {
+    this.imageLoaded = false;
+    this.uploader.nativeElement.value =''
     this.imageSrc = null
+    this.imageChangeHandler.emit(null)
   }
 
 }

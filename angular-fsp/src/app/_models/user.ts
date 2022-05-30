@@ -11,10 +11,12 @@ export interface IUserRegister {
 
 export class User {
 
+    id:number
     email!: string;
     senha!: string;
     nome: string;
     perfis: string[];
+    foto:boolean;
 
     constructor(params: IUserRegister) {
         Object.assign(this, params)
